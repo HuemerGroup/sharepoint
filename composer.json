@@ -1,5 +1,5 @@
 {
     "require": {
-        "vgrem/php-spo": "^2.2"
+        "vgrem/php-spo": "^2.4"
     }
 }

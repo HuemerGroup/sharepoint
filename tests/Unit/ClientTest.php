@@ -25,15 +25,14 @@ namespace OCA\SharePoint\Tests\Unit;
 
 use OCA\SharePoint\ContextsFactory;
 use OCA\SharePoint\Client;
-use Office365\PHP\Client\Runtime\Auth\AuthenticationContext;
-use Office365\PHP\Client\Runtime\ClientObject;
-use Office365\PHP\Client\SharePoint\ClientContext;
-use Office365\PHP\Client\SharePoint\File;
-use Office365\PHP\Client\SharePoint\FileCollection;
-use Office365\PHP\Client\SharePoint\Folder;
-use Office365\PHP\Client\SharePoint\FolderCollection;
-use Office365\PHP\Client\SharePoint\ListItem;
-use Office365\PHP\Client\SharePoint\Web;
+use Office365\Runtime\ClientObject;
+use Office365\SharePoint\ClientContext;
+use Office365\SharePoint\File;
+use Office365\SharePoint\FileCollection;
+use Office365\SharePoint\Folder;
+use Office365\SharePoint\FolderCollection;
+use Office365\SharePoint\ListItem;
+use Office365\SharePoint\Web;
 use Test\TestCase;
 
 class SharePointClientTest extends TestCase {
@@ -64,10 +63,6 @@ class SharePointClientTest extends TestCase {
 		$path = '/' . $this->documentLibraryTitle . '/OurFile.txt';
 		$properties = ['Length', 'TimeLastModified'];
 
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
-
 		$fileMock = $this->createMock(File::class);
 
 		$webMock = $this->createMock(Web::class);
@@ -97,10 +92,6 @@ class SharePointClientTest extends TestCase {
 	public function testFetchFolderByFileOrFolder() {
 		$path = '/' . $this->documentLibraryTitle . '/Our Directory';
 		$properties = ['Length', 'TimeLastModified'];
-
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
 
 		$listItemAllFieldsMock = $this->createMock(ListItem::class);
 
@@ -142,10 +133,6 @@ class SharePointClientTest extends TestCase {
 	public function testFetchNotExistingByFileOrFolder() {
 		$path = '/' . $this->documentLibraryTitle . '/Our Directory/not-here.pdf';
 		$properties = ['Length', 'TimeLastModified'];
-
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
 
 		$fileMock = $this->createMock(File::class);
 
@@ -196,10 +183,6 @@ class SharePointClientTest extends TestCase {
 		$parentPath = '/' . $this->documentLibraryTitle . '/Our Directory';
 		$path = $parentPath . '/'. $dirName;
 
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
-
 		$folderCollectionMock = $this->createMock(FolderCollection::class);
 		$folderCollectionMock->expects($this->once())
 			->method('add')
@@ -237,10 +220,6 @@ class SharePointClientTest extends TestCase {
 		$dirName = 'New Project Dir';
 		$parentPath = '/' . $this->documentLibraryTitle . '/Our Directory';
 		$path = $parentPath . '/'. $dirName;
-
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
 
 		$folderCollectionMock = $this->createMock(FolderCollection::class);
 		$folderCollectionMock->expects($this->once())
@@ -290,10 +269,6 @@ class SharePointClientTest extends TestCase {
 		$itemMock->expects($this->once())
 			->method('recycle');
 
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
-
 		$clientContextMock = $this->createMock(ClientContext::class);
 		$this->contextsFactory->expects($this->once())
 			->method('getClientContext')
@@ -337,10 +312,6 @@ class SharePointClientTest extends TestCase {
 			->method('getListItemAllFields')
 			->willReturn($listItemAllFieldsMock);
 
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
-
 		$webMock = $this->createMock(Web::class);
 		$webMock->expects($this->once())
 			->method($spFetchMethod)
@@ -374,10 +345,6 @@ class SharePointClientTest extends TestCase {
 		$folderMock->expects($this->once())
 			->method('getFiles')
 			->willReturn($fileCollectionMock);
-
-		$this->contextsFactory->expects($this->once())
-			->method('getTokenAuthContext')
-			->willReturn($this->createMock(AuthenticationContext::class));
 
 		$clientContextMock = $this->createMock(ClientContext::class);
 		$clientContextMock->expects($this->exactly(2))
